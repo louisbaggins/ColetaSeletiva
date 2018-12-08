@@ -1,4 +1,4 @@
-///
+//
 //  main.cpp
 //  Coleta Seletiva
 //
@@ -170,4 +170,3 @@ int main() {
     return main();
 }*/
 }
-
