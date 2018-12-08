@@ -17,6 +17,8 @@ class residuo{
 private:
 public:
     std::string nomeResiduo;
+    residuo(){
+    }
     residuo(std::string nomeResiduo){
         this->nomeResiduo = nomeResiduo;
     }
@@ -32,6 +34,8 @@ public:
         this->quantidade = quantidade;
         this->formaArmazenamento = formaArmazenamento;
     }
+    virtual void informaArmazenamento(std::string nomeResiduo){
+    }
 };
 class solido : public residuo{
 private:
@@ -41,6 +45,8 @@ public:
     solido(int quantidade, std::string formaArmazenamento, std::string nomeResiduo) : residuo(nomeResiduo){
         this->quantidade = quantidade;
         this->formaArmazenamento = formaArmazenamento;
+    }
+    virtual void informaArmazenamento(std::string nomeResiduo){
     }
 };
 
