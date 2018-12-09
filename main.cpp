@@ -28,7 +28,9 @@ void ImpressaoUsuarios(std::vector<Pessoa*> teste){
         while(temp < teste[contador]->tipo_residuo.size()){
             std::cout <<teste[contador]->tipo_residuo[temp]->nomeResiduo << std::endl;
             temp++;
-        }}
+        }
+        std::cout << "\n--------------------------------------------------------------------------------\n"<< std::endl;
+    }
 }
 int main() {
     static std::vector<residuo*> residuos;
@@ -122,7 +124,7 @@ int main() {
             unsigned int temp = k;
             k = 1;
             while (k<temp){
-                teste[teste.size()-1]->tipo_residuo.push_back(residuos[escolha[k]]);
+                teste[teste.size()-1]->tipo_residuo.push_back(new residuo(residuos[escolha[k]]->nomeResiduo));
                 k++;
             }}
         
