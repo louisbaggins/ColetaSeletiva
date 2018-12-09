@@ -15,18 +15,21 @@
 #include "agendamento.h"
 class Pessoa{
 private:
-public:
     std::string razao;
+    int _id;
+    std::string nome;
+public:
     std::vector<residuo*> tipo_residuo;
-    std::string nomeFantasia;
-    ~Pessoa(){
-    }
-    Pessoa (){
-        
-    }
-    Pessoa(std::string nome, residuo *tipo){
-        this->razao = nome;
+    virtual ~Pessoa(){};
+    Pessoa (){};
+    Pessoa(std::string nome, std::string razao, residuo *tipo){
+        this->nome = nome;
         this->tipo_residuo.push_back(tipo);
+        this->razao = razao;
+    }
+    virtual std::string get_identificaçao() = 0;
+    virtual std::vector<residuo*> gets_tipo_residuo(){
+        return tipo_residuo;
     }
     virtual std::string gets_res(std::string tipo){
         unsigned int p = 0;
@@ -37,36 +40,50 @@ public:
     }
     
     virtual std::string gets_nome(){
+        return this->nome;
+    }
+    virtual std::string gets_razao(){
         return this->razao;
     }
     virtual void set_nome(std::string nome){
-        this->razao = nome;
+        this->nome = nome;
     }
     virtual void set_tipo_residuo(residuo *tipo){
         this->tipo_residuo.push_back(tipo);
     }
+    virtual int get_id() = 0;
+    
 };
 class PessoaFisica : public Pessoa {
 private:
+    std::string CPF;
+    int _id = 0;
 public:
-
-     std::string nome;
-     std::string CPF;
     //bool VerificaCPF(std::string CPF);
-    PessoaFisica(std::string nome, std::string CPF,std::string razao, residuo &tipo_residuo ): Pessoa(razao, &tipo_residuo){
-        this->nome = nome;
+    PessoaFisica(std::string CPF,std::string nome,std::string razao, residuo &tipo_residuo): Pessoa(nome, razao, &tipo_residuo){
         this->CPF = CPF;
+    }
+    virtual std::string get_identificaçao() override{
+        return this->CPF;
+    }
+    int get_id() override{
+        return _id;
     }
 };
 class PessoaJuridica : public Pessoa {
 private:
-public:
-    std::string nomeFantasia;
     std::string CNPJ;
+    int _id = 1;
+public:
     //bool VerificaCNPJ(std::string CPF);
-    PessoaJuridica(std::string nomeFantasia, std::string CNPJ, residuo &tipo_residuo, std::string razao) : Pessoa( razao, &tipo_residuo){
-        this->nomeFantasia = nomeFantasia;
+    PessoaJuridica(std::string CNPJ, std::string nomeFantasia, std::string razao, residuo &tipo_residuo) : Pessoa(nomeFantasia, razao, &tipo_residuo){
         this->CNPJ = CNPJ;
+    }
+    virtual std::string get_identificaçao() override{
+        return this->CNPJ;
+    }
+    int get_id() override{
+        return _id;
     }
 };
 
