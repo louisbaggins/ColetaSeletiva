@@ -42,14 +42,6 @@ int main() {
     static std::vector<residuo*> residuos;
     static std::vector<Pessoa*> Usuarios;
     static std::vector<PontoEntrega*> Locais;
-    //Pessoa *pfv = new PessoaFisica("nome", "CPF", "teste", *residuos[0]);
-    //std::cout << pfv->CPF;
-    residuos.push_back(new residuo("metal"));
-    Pessoa *work = new PessoaJuridica("CNPJ", "nome", "cpf" ,*residuos[0]);
-    std::cout << work->get_identificaçao() << std::endl;
-    Pessoa *funciona = work;
-    std::cout << funciona->get_identificaçao();
-    
     std::cout << "ESCOLHA A ACAO QUE DESEJA REALIZAR: \n\n a) Cadastrar residuo \t b) Cadastrar usuario \n c) Cadastrar ponto de entrega\t d) Listar residuos\n e) Listar Usuarios \t f) Listar pontos de entrega" << std::endl;
     char resposta;
     std::cin >> resposta;
@@ -66,19 +58,31 @@ int main() {
             std::cout << "Escolha o tipo de residuo que deseja cadastrar: \na)Liquido\nb)Solido\nc)Organico" << std::endl;
             std::cin >> tipoRes;
         if(tipoRes == 'a' || tipoRes == 'A'){
-                std::cout << "Qual o nome do residuo?" << std::endl;
-                std::cin >> res;
-                residuos.push_back(new residuo(res));
+            std::cout << "Qual o nome do residuo?" << std::endl;
+            std::cin >> res;
+            std::cout << "Informe a quantidade(em litros): " ;
+            std::cin >> quantidade;
+            std::cout << "Informe a maneira que o residuo deve ser armazenado: " << std::endl;
+            std::getline(std::cin, forma_armazenamento);
+            residuos.push_back(new liquido(quantidade, forma_armazenamento, res));
             }
     if(tipoRes == 'b' || tipoRes == 'B'){
         std::cout << "Qual o nome do residuo?" << std::endl;
         std::cin >> res;
-        residuos.push_back(new residuo(res));
+        std::cout << "Informe a quantidade(em kg): " ;
+        std::cin >> quantidade;
+        std::cout << "Informe a maneira que o residuo deve ser armazenado: " << std::endl;
+        std::getline(std::cin, forma_armazenamento);
+        residuos.push_back(new solido(quantidade, forma_armazenamento, res));
     }
         if(tipoRes == 'c' || tipoRes == 'C'){
             std::cout << "Qual o nome do residuo?" << std::endl;
             std::cin >> res;
-            residuos.push_back(new residuo(res));
+            std::cout << "Informe a quantidade(em kg): " ;
+            std::cin >> quantidade;
+            std::cout << "Informe a maneira que o residuo deve ser armazenado: " << std::endl;
+            std::getline(std::cin, forma_armazenamento);
+            residuos.push_back(new organico(quantidade, forma_armazenamento, res));
         }
             std::cout << "\n Deseja realizar o cadastro de mais residuos? \ns) \t n)" << std::endl;
             std::cin >> cond;
@@ -145,8 +149,20 @@ int main() {
             unsigned int temp = k;
             k = 1;
             while (k<temp){
-                Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new residuo(residuos[escolha[k]]->nomeResiduo));
+                if(residuos[escolha[k]]->gets_id() == 0){
+                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new liquido(residuos[escolha[k]]->gets_quantidade(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_nome() ));
+                
+            }
+                    if(residuos[escolha[k]]->gets_id() == 1){
+                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new solido(residuos[escolha[k]]->gets_nome(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_quantidade() ));
+                    
+                }
+                    if(residuos[escolha[k]]->gets_id() == 3){
+                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new organico(residuos[escolha[k]]->gets_nome(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_quantidade() ));
+                    
+                }
                 k++;
+                
             }}}
         if (sit == 'A' || sit == 'a'){
             std::cout << "Digite o CNPJ do usuario: " << std::endl;
@@ -156,9 +172,19 @@ int main() {
                 unsigned int temp = k;
                 k = 1;
                 while (k<temp){
-                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new residuo(residuos[escolha[k]]->nomeResiduo));
-                    k++;
-                }}}
+                    if(residuos[escolha[k]]->gets_id() == 0){
+                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new liquido(residuos[escolha[k]]->gets_quantidade(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_nome() ));
+                        
+                    }
+                    if(residuos[escolha[k]]->gets_id() == 1){
+                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new solido(residuos[escolha[k]]->gets_nome(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_quantidade() ));
+                        
+                    }
+                    if(residuos[escolha[k]]->gets_id() == 3){
+                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new organico(residuos[escolha[k]]->gets_nome(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_quantidade() ));
+                        
+                    }
+                    k++;}}}
     
     
         
@@ -183,7 +209,8 @@ int main() {
        char esclh = 's';
        while(esclh == 's' || esclh == 'S'){
        std::cout << "Qual o endereço do ponto de entrega: ";
-        std::getline (std::cin, local);
+           std::cin.ignore(1000,'\n');
+           std::getline (std::cin, local);
        Locais.push_back(new PontoEntrega(local));
        std::cout << "Deseja cadastrar mais algum ponto?\nS)\tN) " << std::endl;
        std::cin >> esclh;
