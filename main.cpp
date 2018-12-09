@@ -13,11 +13,27 @@
 #include "residuo.h"
 #include "PontoEntrega.h"
 #include "agendamento.h"
-
+int main();
+void ImpressaoUsuarios(std::vector<Pessoa*> teste);
+void ImpressaoResiduos(std::vector<residuo*> residuos){
+        for(unsigned int contador = 0; contador < residuos.size(); contador++){
+            std::cout << contador+1 << ") "<< residuos[contador]->nomeResiduo << std::endl;
+        }
+        char cont;
+    cont = 's';
+        if (cont == 's' || cont == 'S'){
+            /*std::cout << "\nDeseja realizar uma nova operação?\nS) \t  N)" << std::endl;
+            std::cin >> cont;*/
+            main();
+        }
+}
+    
 int main() {
     // insert code here...
     static std::vector<residuo*> residuos;
     static std::vector<Pessoa*> teste;
+    //Pessoa *pfv = new PessoaFisica("nome", "CPF", "teste", *residuos[0]);
+    //std::cout << pfv->CPF;
     std::cout << "ESCOLHA A ACAO QUE DESEJA REALIZAR: \n\n a) Cadastrar residuo \t b) Cadastrar usuario \n c) Cadastrar ponto de entrega\t d) Listar residuos\n e) Listar Usuarios \t f) Listar pontos de entrega" << std::endl;
     char resposta;
     std::cin >> resposta;
@@ -57,6 +73,8 @@ int main() {
    
     //IMPRESSAO DE RESIDUOS(INICIO) ------------------------------------------------------------------------------
     if(resposta == 'd' || resposta == 'D'){
+        ImpressaoResiduos(residuos);
+        /*
         for(unsigned int contador = 0; contador < residuos.size(); contador++){
             std::cout << "\n" << residuos[0]->nomeResiduo << std::endl;
     }
@@ -67,7 +85,61 @@ int main() {
         std::cin >> cont;
         return main();
     }
-        return 0;
+        }*/
+        return main();
+    }
+         //IMPRESSAO DE RESIDUOS(FINAL) --------------------------------------------------------------------------
+        
+    //CADASTRO DE USUARIOS(INICIO) -------------------------------------------------------------------------------
+    unsigned int k = 0;;
+     std::string nome_usuario;
+     std::string CPF;
+     std::string CNPJ;
+     std::string razao;
+    int escolha[residuos.size()];
+    if(resposta == 'B'|| resposta == 'b'){
+        cond = 's';
+    while(cond == 's' || cond == 'S'){
+        std::cout << "Digite o nome do Usuario a ser cadastrado:  ";
+        std::cin >> nome_usuario;
+        std::cout << "Quais tipos de residuo serao aceitos?" << std::endl;
+        ImpressaoResiduos(residuos);
+        std::cin >> escolha[0];
+        char lp;
+        std::cout << "Deseja incluir mais algum residuo? \nS)        \t N)" << std::endl;
+        std::cin >> lp;
+        while(lp == 's' || lp == 'S'){
+            ImpressaoResiduos(residuos);
+            k = 1;
+            std::cin >> escolha[k];
+            k++;
+            std::cout << "Deseja incluir mais algum residuo? \nS)        \t N)" << std::endl;
+            std::cin >> lp;
+        }
+        teste.push_back(new Pessoa(nome_usuario, residuos[escolha[0] - 1]));
+        if(k>0){
+            unsigned int temp = k;
+            k = 1;
+            while (k<temp){
+                teste[teste.size()-1]->tipo_residuo.push_back(residuos[escolha[k]]);
+                k++;
+            }}
+        
+        std::cout <<"Deseja incluir mais usuarios?" << std::endl;
+        std::cin >> cond;
+    }}
+    
+    //CADASTRO DE USUARIOS(FINAL) -------------------------------------------------------------------------------
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    return 0;
     
     
     
@@ -169,4 +241,4 @@ int main() {
     return 0;
     return main();
 }*/
-}
+

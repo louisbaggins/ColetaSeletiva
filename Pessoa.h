@@ -17,7 +17,8 @@ class Pessoa{
 private:
 public:
     std::string razao;
-    residuo *tipo_residuo;
+    std::vector<residuo*> tipo_residuo;
+    std::string nomeFantasia;
     ~Pessoa(){
     }
     Pessoa (){
@@ -25,10 +26,14 @@ public:
     }
     Pessoa(std::string nome, residuo *tipo){
         this->razao = nome;
-        this->tipo_residuo = tipo;
+        this->tipo_residuo.push_back(tipo);
     }
-    virtual std::string gets_res(){
-        return tipo_residuo->nomeResiduo;
+    virtual std::string gets_res(std::string tipo){
+        unsigned int p = 0;
+        while(tipo_residuo[p]->nomeResiduo != tipo){
+            p++;
+        }
+        return tipo_residuo[p]->nomeResiduo;
     }
     
     virtual std::string gets_nome(){
@@ -37,8 +42,8 @@ public:
     virtual void set_nome(std::string nome){
         this->razao = nome;
     }
-    virtual void set_tipo_residuo(std::string tipo){
-        this->tipo_residuo->nomeResiduo = tipo;
+    virtual void set_tipo_residuo(residuo *tipo){
+        this->tipo_residuo.push_back(tipo);
     }
 };
 class PessoaFisica : public Pessoa {
