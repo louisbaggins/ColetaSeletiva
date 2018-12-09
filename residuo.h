@@ -19,34 +19,78 @@ public:
     std::string nomeResiduo;
     residuo(){
     }
+    virtual ~residuo(){};
     residuo(std::string nomeResiduo){
         this->nomeResiduo = nomeResiduo;
     }
-    virtual void informaArmazenamento(std::string nomeResiduo){
+    virtual std::string gets_nome(){
+        return this->nomeResiduo;
     }
+    virtual std::string informaArmazenamento(std::string nomeResiduo) = 0;
+    virtual std::string gets_quantidade() = 0;
+    virtual int gets_id() = 0;
 };
 class liquido : public residuo{
 private:
-public:
-    int quantidade;
+    int _id = 0;
+    std::string quantidade;
     std::string formaArmazenamento;
-    liquido(int quantidade, std::string formaArmazenamento, std::string nomeResiduo) : residuo(nomeResiduo){
+public:
+    liquido(std::string quantidade, std::string formaArmazenamento, std::string nomeResiduo) : residuo(nomeResiduo){
         this->quantidade = quantidade;
         this->formaArmazenamento = formaArmazenamento;
     }
-    virtual void informaArmazenamento(std::string nomeResiduo){
+    std::string gets_quantidade() override {
+        return this->quantidade;
+    }
+    virtual std::string informaArmazenamento(std::string nomeResiduo) override{
+        //std::cout << this->formaArmazenamento << std::endl;
+        return this->formaArmazenamento;
+    }
+    int gets_id() override {
+        return this->_id;
     }
 };
 class solido : public residuo{
 private:
-public:
-    int quantidade;
+    int _id = 1;
+    std::string quantidade;
     std::string formaArmazenamento;
-    solido(int quantidade, std::string formaArmazenamento, std::string nomeResiduo) : residuo(nomeResiduo){
+public:
+    solido(std::string quantidade, std::string formaArmazenamento, std::string nomeResiduo) : residuo(nomeResiduo){
         this->quantidade = quantidade;
         this->formaArmazenamento = formaArmazenamento;
     }
-    virtual void informaArmazenamento(std::string nomeResiduo){
+    std::string gets_quantidade() override {
+        return this->quantidade;
+    }
+    std::string informaArmazenamento(std::string nomeResiduo) override{
+        //std::cout << this->formaArmazenamento << std::endl;
+        return  this->formaArmazenamento;
+    }
+    int gets_id() override {
+        return this->_id;
+    }
+};
+class organico : public residuo{
+private:
+    int _id = 3;
+    std::string quantidade;
+    std::string formaArmazenamento;
+public:
+    organico(std::string quantidade, std::string formaArmazenamento, std::string nomeResiduo) : residuo(nomeResiduo){
+        this->quantidade = quantidade;
+        this->formaArmazenamento = formaArmazenamento;
+    }
+    std::string gets_quantidade() override {
+        return this->quantidade;
+    }
+    std::string informaArmazenamento(std::string nomeResiduo) override{
+        //std::cout << this->formaArmazenamento << std::endl;
+        return this->formaArmazenamento;
+    }
+    int gets_id() override {
+        return this->_id;
     }
 };
 
