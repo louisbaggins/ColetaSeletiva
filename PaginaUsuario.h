@@ -1,0 +1,33 @@
+//
+//  PaginaUsuario.h
+//  Coleta Seletiva
+//
+//  Created by Luis Araújo on 09/12/2018.
+//  Copyright © 2018 Lista 1. All rights reserved.
+//
+
+#ifndef PaginaUsuario_h
+#define PaginaUsuario_h
+#include <string.h>
+#include <iostream>
+#include "Pessoa.h"
+#include "residuo.h"
+#include "PontoEntrega.h"
+#include "agendamento.h"
+struct mensagem{
+    std::string user;
+    int numero;
+    std::string residuo;
+    std::string data;
+    PontoEntrega local;
+};
+class userpage {
+private:
+public:
+    void get_mensagem(){
+        std::cout<< "Mensagem enviada de" << this->msg->user << ":\n" << "OLA, GOSTARIA DE MARCAR O ENCONTRO PARA DOAR" << this->msg->residuo << "NO DIA" << this->msg->data << "NO PONTO DE ENTREGA" << &this->msg->local << std::endl;
+    }
+    mensagem *msg;
+    void Doar(){};
+};
+#endif /* PaginaUsuario_h */

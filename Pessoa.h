@@ -12,20 +12,26 @@
 #include <iostream>
 #include "residuo.h"
 #include "PontoEntrega.h"
+#include "PaginaUsuario.h"
 #include "agendamento.h"
+
 class Pessoa{
 private:
+    unsigned long _log;
     std::string razao;
     int _id;
     std::string nome;
+    
 public:
+    userpage page;
     std::vector<residuo*> tipo_residuo;
     virtual ~Pessoa(){};
     Pessoa (){};
-    Pessoa(std::string nome, std::string razao, residuo *tipo){
+    Pessoa(std::string nome, std::string razao, residuo *tipo, unsigned long size){
         this->nome = nome;
         this->tipo_residuo.push_back(tipo);
         this->razao = razao;
+        this->_log = size;
     }
     virtual std::string get_identificaçao() = 0;
     virtual std::vector<residuo*> gets_tipo_residuo(){
@@ -37,6 +43,9 @@ public:
             p++;
         }
         return tipo_residuo[p]->nomeResiduo;
+    }
+    virtual unsigned long get_log() {
+        return _log;
     }
     
     virtual std::string gets_nome(){
@@ -60,7 +69,7 @@ private:
     int _id = 0;
 public:
     //bool VerificaCPF(std::string CPF);
-    PessoaFisica(std::string CPF,std::string nome,std::string razao, residuo &tipo_residuo): Pessoa(nome, razao, &tipo_residuo){
+    PessoaFisica(std::string CPF,std::string nome,std::string razao, residuo &tipo_residuo, int size): Pessoa(nome, razao, &tipo_residuo, size){
         this->CPF = CPF;
     }
     virtual std::string get_identificaçao() override{
@@ -69,6 +78,7 @@ public:
     int get_id() override{
         return _id;
     }
+    
 };
 class PessoaJuridica : public Pessoa {
 private:
@@ -76,7 +86,7 @@ private:
     int _id = 1;
 public:
     //bool VerificaCNPJ(std::string CPF);
-    PessoaJuridica(std::string CNPJ, std::string nomeFantasia, std::string razao, residuo &tipo_residuo) : Pessoa(nomeFantasia, razao, &tipo_residuo){
+    PessoaJuridica(std::string CNPJ, std::string nomeFantasia, std::string razao, residuo &tipo_residuo, int size) : Pessoa(nomeFantasia, razao, &tipo_residuo, size){
         this->CNPJ = CNPJ;
     }
     virtual std::string get_identificaçao() override{
