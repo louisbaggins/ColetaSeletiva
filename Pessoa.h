@@ -14,16 +14,14 @@
 #include "PontoEntrega.h"
 #include "PaginaUsuario.h"
 #include "agendamento.h"
-
 class Pessoa{
 private:
     unsigned long _log;
     std::string razao;
     int _id;
     std::string nome;
-    
 public:
-    userpage page;
+    userpage *page;
     std::vector<residuo*> tipo_residuo;
     virtual ~Pessoa(){};
     Pessoa (){};
@@ -32,6 +30,7 @@ public:
         this->tipo_residuo.push_back(tipo);
         this->razao = razao;
         this->_log = size;
+        
     }
     virtual std::string get_identificaçao() = 0;
     virtual std::vector<residuo*> gets_tipo_residuo(){
