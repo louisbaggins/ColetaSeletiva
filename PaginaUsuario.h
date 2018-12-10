@@ -16,18 +16,44 @@
 #include "agendamento.h"
 struct mensagem{
     std::string user;
-    int numero;
+    int numero = 0;
     std::string residuo;
     std::string data;
-    PontoEntrega local;
+    PontoEntrega *local;
 };
 class userpage {
 private:
 public:
-    void get_mensagem(){
-        std::cout<< "Mensagem enviada de" << this->msg->user << ":\n" << "OLA, GOSTARIA DE MARCAR O ENCONTRO PARA DOAR" << this->msg->residuo << "NO DIA" << this->msg->data << "NO PONTO DE ENTREGA" << &this->msg->local << std::endl;
-    }
     mensagem *msg;
+    ~userpage(){
+
+    }
+    int get_num(){
+        return this->msg->numero;
+    }
+    void set_numero(){
+        this->msg->numero += 1;
+    }
+    userpage(){
+        this->msg->numero = 0;
+    }
+    userpage(std::string user, std::string residuo, std::string data, std::string local){
+        this->msg->user = user;
+        this->msg->residuo = "RESIDUOS";
+        this->msg->data = data;
+        this->msg->local = new PontoEntrega(local);
+        
+    }
+    void set_data(std::string data){
+        this->msg->data = data;
+    }
+    void set_residuo(std::string residuo){
+        this->msg->residuo = residuo;
+    }
+    void get_mensagem(){
+        std::cout<< "Mensagem enviada de " << this->msg->user << ":\n" << "OLA, GOSTARIA DE MARCAR O ENCONTRO PARA DOAR " << this->msg->residuo << " NO DIA " << this->msg->data << " NO PONTO DE ENTREGA " << this->msg->local->endereco << std::endl;
+    }
+    
     void Doar(){};
 };
 #endif /* PaginaUsuario_h */
