@@ -5,6 +5,7 @@
 //  Created by Luis Araújo on 12/11/2018.
 //  Copyright © 2018 Lista 1. All rights reserved.
 //
+
 #include <string.h>
 #include <iostream>
 #include <vector>
@@ -15,6 +16,7 @@
 #include "PontoEntrega.h"
 #include "agendamento.h"
 #include "PaginaUsuario.h"
+
 int main();
 void ImpressaoPontoEntrega(std::vector<PontoEntrega*> Locais){
     for (unsigned int impem = 0; impem < Locais.size(); impem++){
@@ -47,10 +49,11 @@ void ImpressaoUsuarios(std::vector<Pessoa*> teste){
     }
 }
 int main() {
+    static std::vector<Agendamento*> eventos;
     static std::vector<residuo*> residuos;
     static std::vector<Pessoa*> Usuarios;
     static std::vector<PontoEntrega*> Locais;
-    std::cout << "ESCOLHA A ACAO QUE DESEJA REALIZAR: \n\n a) Cadastrar residuo \t b) Cadastrar usuario \n c) Cadastrar ponto de entrega\t d) Listar residuos\n e) Listar Usuarios \t f) Listar pontos de entrega" << std::endl;
+    std::cout << "ESCOLHA A ACAO QUE DESEJA REALIZAR: \n\n a) Cadastrar residuo \t b) Cadastrar usuario \n c) Cadastrar ponto de entrega\t d) Listar residuos\n e) Listar Usuarios \t f) Listar pontos de entrega\ng)Finalizar programa\th)Pagina do Usuario(Agendar doaçoes)" << std::endl;
     char resposta;
     std::cin >> resposta;
     std::string forma_armazenamento;
@@ -135,8 +138,7 @@ int main() {
         std::cin >> lp;
         while(lp == 's' || lp == 'S'){
             ImpressaoResiduos(residuos);
-            k = 1;
-            std::cin >> escolha[k];
+            std::cin >> escolha[k+1];
             k++;
             std::cout << "Deseja incluir mais algum residuo? \nS)        \t N)" << std::endl;
             std::cin >> lp;
@@ -154,11 +156,11 @@ int main() {
                 
             }
                     if(residuos[escolha[k]-1]->gets_id() == 1){
-                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new solido(residuos[escolha[k]-1]->gets_nome(), residuos[escolha[k]-1]->informaArmazenamento(residuos[escolha[k]-1]->gets_nome()), residuos[escolha[k]-1]->gets_quantidade() ));
+                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new solido(residuos[escolha[k]-1]->gets_quantidade(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k] -1 ]->gets_nome()), residuos[escolha[k]-1]->gets_nome()));
                     
                 }
                     if(residuos[escolha[k]-1]->gets_id() == 3){
-                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new organico(residuos[escolha[k]-1]->gets_nome(), residuos[escolha[k]-1]->informaArmazenamento(residuos[escolha[k]-1]->gets_nome()), residuos[escolha[k]-1]->gets_quantidade() ));
+                    Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new organico(residuos[escolha[k]-1]->gets_quantidade(), residuos[escolha[k]-1]->informaArmazenamento(residuos[escolha[k]-1]->gets_nome()), residuos[escolha[k]-1]->gets_nome() ));
                     
                 }
                 k++;
@@ -177,11 +179,11 @@ int main() {
                         
                     }
                     if(residuos[escolha[k]]->gets_id() == 1){
-                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new solido(residuos[escolha[k]]->gets_nome(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_quantidade() ));
+                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new solido(residuos[escolha[k]]->gets_quantidade(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_nome() ));
                         
                     }
                     if(residuos[escolha[k]]->gets_id() == 3){
-                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new organico(residuos[escolha[k]]->gets_nome(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()), residuos[escolha[k]]->gets_quantidade() ));
+                        Usuarios[Usuarios.size()-1]->tipo_residuo.push_back(new organico(residuos[escolha[k]]->gets_quantidade(), residuos[escolha[k]]->informaArmazenamento(residuos[escolha[k]]->gets_nome()) ,residuos[escolha[k]]->gets_nome()) );
                         
                     }
                     k++;}}}
@@ -223,10 +225,6 @@ int main() {
     
     //IMPRESSAO PONTOS DE ENTREGA(INICIO) ------------------------------------------------------------------------
     if(resposta == 'f' || resposta == 'F'){
-   /* for (unsigned int impem = 0; impem < Locais.size(); impem++){
-        std::cout << impem+1 << ")" << Locais[impem]->endereco << std::endl;
-       }
-        return main();}*/
         ImpressaoPontoEntrega(Locais); return main();}
     
     //IMPRESSAO PONTOS DE ENTREGA(FINAL) ------------------------------------------------------------------------
@@ -238,6 +236,7 @@ int main() {
     std::string horario; //CONFERIR
     std::string senha;
     std::string acesso;
+    std::string Donirone;
     int notf;
     int num;
     unsigned int T = 0;
@@ -251,7 +250,7 @@ int main() {
     std::cout <<"CPF: ";
     std::cin >> senha;
     int aviso = 0;
-    while(T-1 < Usuarios.size() || (senha != Usuarios[T]->get_identificaçao() && acesso != Usuarios[T]->gets_nome() )){
+    while(T < Usuarios.size() && (senha != Usuarios[T]->get_identificaçao() && acesso != Usuarios[T]->gets_nome() )){
         
         if(senha == Usuarios[T]->get_identificaçao()){
             aviso = 1;
@@ -267,6 +266,7 @@ int main() {
         
             std::cout << "---------------------PAGINA DO USUARIO----------------------\n---------------------BEM VINDO DE VOLTA "<< Usuarios[T]->gets_nome()<< "----------------------" << std::endl;
         std::cout << "USUARIO(A) - "<< T+1 << ": "<< Usuarios[T]->gets_nome() << std::endl;
+        Donirone = Usuarios[T]->gets_nome();
         if(Usuarios[T]->get_id() == 1){
             std::cout << "CNPJ: "<< Usuarios[T]->get_identificaçao()<< std::endl;
         }
@@ -282,6 +282,7 @@ int main() {
         }
         std::cout << "\n--------------------------------------------------------------------------------"<< std::endl;
         notf = 0;//Usuarios[T]->page.msg->numero;
+
         std::cout << "OPÇOES\nA)Agendar\nB)Mensagens("<< notf <<")\nC)Retornar ao Menu"<<std::endl;
         char vf;
         std::cin >> vf;
@@ -302,7 +303,7 @@ int main() {
                 unsigned int temp2 = 0;
                 while(temp2 < Usuarios[contador2]->gets_tipo_residuo().size()){
                     if(Usuarios[contador2]->gets_tipo_residuo()[temp2]->gets_nome() == residuos[num-1]->gets_nome()){
-                    std::cout << "ID -  "<< Usuarios[contador2]->get_log()<<"USUARIO(A) - "<< contador2+1 << ": "<< Usuarios[contador2]->gets_nome() << std::endl;
+                        std::cout << "ID -  "<< Usuarios[contador2]->get_log()<<": USUARIO(A) - "<< contador2+1 << ": "<< Usuarios[contador2]->gets_nome() << std::endl;
                 if(Usuarios[contador2]->get_id() == 1){
                     std::cout << "CNPJ: "<< Usuarios[contador2]->get_identificaçao()<< std::endl;
                 }
@@ -319,16 +320,23 @@ int main() {
             int goku = 0;
             std::cout << "Digite a id do usuario que deseja doar: ";
             std::cin >> _log;
-            while (goku < Usuarios.size() || _log == Usuarios[goku]->get_id()){
-                if(Usuarios[goku]->get_id() == _log){
-                    Usuarios[goku]->page.msg->residuo =  dadosResiduo;
-                    Usuarios[goku]->page.msg->local = *new PontoEntrega(dadosLocal);
+            if(Usuarios[goku]->get_log() == _log){
+                std::cout << " Qual a data do encontro?\n ";
+                std::cin.ignore(1000,'\n');
+                std::getline(std::cin, horario);
+                Usuarios[goku]->page = new userpage(Donirone, dadosResiduo, horario, dadosLocal);
+                Usuarios[goku]->page->set_numero();
+                std::cout<< "Mensagem enviada para " << Usuarios[goku]->gets_nome()<< ":\n" << "OLA, GOSTARIA DE MARCAR O ENCONTRO PARA DOAR " << "OS RESIDUOS" << " NO DIA " << horario << " NO PONTO DE ENTREGA " << dadosLocal << std::endl;
+                indicador = 1;
+            }
+            while (goku < Usuarios.size() && _log != Usuarios[goku]->get_log()){
+                if(Usuarios[goku]->get_log() == _log){
                     std::cout << " Qual a data do encontro?\n ";
                     std::cin.ignore(1000,'\n');
                     std::getline(std::cin, horario);
-                    Usuarios[goku]->page.msg->data = horario;
-                    Usuarios[goku]->page.msg->numero += 1;
-                    std::cout<< "Mensagem enviada para" << Usuarios[goku]->gets_nome()<< ":\n" << "OLA, GOSTARIA DE MARCAR O ENCONTRO PARA DOAR" << dadosResiduo << "NO DIA" << horario << "NO PONTO DE ENTREGA" << dadosLocal << std::endl;
+                    Usuarios[goku]->page = new userpage(Donirone, dadosResiduo, horario, dadosLocal);
+                    std::cout<< "Mensagem enviada para " << Usuarios[goku]->gets_nome()<< ":\n" << "OLA, GOSTARIA DE MARCAR O ENCONTRO PARA DOAR " << "OS RESIDUOS" << " NO DIA " << horario << " NO PONTO DE ENTREGA " << dadosLocal << std::endl;
+                    eventos.push_back(new Agendamento(true, Usuarios[goku]->gets_nome(), Donirone));
                     indicador = 1;
                     break;
                     
@@ -341,144 +349,41 @@ int main() {
             }
         }
         //AGENDAMENTO PRIMEIRA PARTE(FINAL)----------------------------------------------------------------------------------------------
+        //AGENDAMENTO SEGUNDA PARTE(INICIO)----------------------------------------------------------------------------------------------
         if (vf == 'B' || vf == 'b'){
+            char confirmacao;
             std::cout << "----------------------------------------------------SUAS       MENSAGENS----------------------------------------------------\n" << std::endl;
-            Usuarios[T]->page.get_mensagem();
+            Usuarios[T]->page->get_mensagem();
+            std::cout << "Deseja aceitar o evento?\nS)\tN)" << std::endl;
+            std::cin >> confirmacao;
+            if(confirmacao == 's' || confirmacao =='S'){
+                unsigned int lastone = 0;
+                    while( lastone < eventos.size() && (eventos[lastone]->get_receptor() != Usuarios[T]->gets_nome() && eventos[lastone]->get_donate() != Donirone)){
+                        lastone++;
+                        if(eventos[lastone]->get_receptor() == Usuarios[T]->gets_nome() && eventos[lastone]->get_donate() == Donirone){
+                            eventos[lastone]->set_receptor(true);
+                            eventos[lastone]->checa_agendamento();
+                        }
+                    }
+                }
+            else{
+                unsigned int lastone2 = 0;
+                while( lastone2 < eventos.size() && (eventos[lastone2]->get_receptor() != Usuarios[T]->gets_nome() && eventos[lastone2]->get_donate() != Donirone)){
+                    lastone2++;
+                    if(eventos[lastone2]->get_receptor() == Usuarios[T]->gets_nome() && eventos[lastone2]->get_donate() == Donirone){
+                        eventos[lastone2]->set_receptor(false);
+                    }}}
         }
+        //AGENDAMENTO SEGUNDA PARTE(FINAL)----------------------------------------------------------------------------------------------
         if (vf == 'c' || vf == 'C'){
             return main();
         }
     }
-    
-    return main();
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    return 0;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
-    
-    /*//Pessoa *test = new Pessoa("nome", "razao");
-    //std::cout<< "\n" << test->tipo_residuo << std::endl;
-    //std::cout<< "\n" <<test->CPF << std::endl;
-    std::string tipoResiduo;
-    std::string razao;
-    std::cout << "\n" << "Deseja realizar o cadastro pessoas?\n\t S) \t N)" << std::endl;
-    char k;
-    std::cin >> k;
-    while(k == 's' || k == 'S'){
-        std::cout << "\n" << "Digite o tipo de residuo: " << std::endl;
-        std::cin >> tipoResiduo;
-        std::cout << "\n" << "Digite se eh doador ou recolhedor: " << std::endl;
-        std::cin >> razao;
-        teste.push_back(new Pessoa(tipoResiduo, razao));
-        std::cout << "\n" << "Deseja realizar o cadastro de mais pessoas?\n\t S) \t N)" << std::endl;
-        std::cin >> k;
-    }
-        /*for( unsigned int o = 0; o < teste.size(); o++){
-            
-        }
-    
-    
-    if(k == 'n' || k == 'N'){
-    for(unsigned int l = 0; l < teste.size(); l++){
-        
-        std::cout << "\n" << teste[l]->gets_res()<< std::endl;
-        std::cout << "\n" << teste[l]->gets_nome()<< std::endl;
-
-
-    }
+    if(resposta == 'g' || resposta == 'G'){
         return 0;
     }
-    else{
-        std::cout << "Digite uma letra valida" << std::endl;
-    }
     
-    std::cout << "\n" << teste.size() << std::endl;
-    
-   // std::cout << "\n" << teste[0].razao<< std::endl;
-   
-    PessoaJuridica *P = new PessoaJuridica("Fisico", "Doador","Apple", "123565478");
-    std::cout << "\n" << P->tipoResiduo<< std::endl;
-    std::cout << "\n" << P->CNPJ<< std::endl;
-    std::cout << "\n" << P->nomeFantasia<< std::endl;
-    std::cout << "\n" << P->razao<< std::endl;
-    return 0;
     return main();
-}*/
-
+    
+    return 0;
+}
